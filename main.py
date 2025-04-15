@@ -48,7 +48,7 @@ st.write("""
 
 # Upload ZIP file containing the dataset
 # The name of the file is archive (19).zip
-github_zip_url = 'https://github.com/yourusername/yourrepository/raw/main/archive%20(19).zip'  # URL encoded file name
+github_zip_url = 'https://github.com/HarshitaHanda/Parkinson/blob/main/archive%20(19).zip'  # URL encoded file name
 
 # Download the ZIP file from GitHub
 response = requests.get(github_zip_url)
