@@ -75,12 +75,11 @@ if uploaded_file is not None:
             sleep_val = 1 if sleep_input == "Yes" else 0
             motor_val = 1 if motor_input == "Yes" else 0
 
-            # Repeat the input data across 80 timesteps (to match the expected shape of (80, 1))
+            # Create an input array with 4 features per timestep, repeated across 80 timesteps
             X_input = np.array([[parkinson_val, tremor_val, sleep_val, motor_val]] * 80)
 
-            # Reshape for the model (shape: (1, 80, 1)) to match model input
-            # Now we reshape it to (1, 80, 1), as the model expects 1 feature per timestep
-            X_input = X_input[:, :, 0].reshape(1, 80, 1)
+            # Reshape for the model (shape: (1, 80, 4))
+            X_input = X_input.reshape(1, 80, 4)
 
             # Button to predict
             if st.button('Predict'):
