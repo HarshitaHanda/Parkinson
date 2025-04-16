@@ -8,8 +8,17 @@ from tensorflow.keras.models import load_model
 from sklearn.preprocessing import StandardScaler
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-# Load the trained model
-model = load_model('parkinson_multi_task_model.h5')
+import os
+from tensorflow.keras.models import load_model
+
+# Check if the model file exists
+model_path = 'parkinson_multi_task_model.h5'
+if os.path.exists(model_path):
+    model = load_model(model_path)
+    st.write("Model loaded successfully.")
+else:
+    st.error(f"Model file {model_path} not found. Please upload the model file or ensure it's in the correct location.")
+
 
 # Function to convert string signal data into arrays
 def convert_to_array(signal_str):
