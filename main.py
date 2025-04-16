@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # Load the trained model
-model = load_model('parkinson_multi_task_model.h5')
+model = load_model('/mnt/data/parkinson_multi_task_model.h5')
 
 # Function to convert string signal data into arrays
 def convert_to_array(signal_str):
@@ -75,11 +75,15 @@ if uploaded_file is not None:
             sleep_val = 1 if sleep_input == "Yes" else 0
             motor_val = 1 if motor_input == "Yes" else 0
 
-            # Create an input array with 4 features per timestep, repeated across 80 timesteps
-            X_input = np.array([[parkinson_val, tremor_val, sleep_val, motor_val]] * 80)
+            # Combine all 4 input features into a single value per timestep
+            # We can either sum, average, or combine these features in some other way
+            combined_input = (parkinson_val + tremor_val + sleep_val + motor_val) / 4  # Average the 4 features
 
-            # Reshape for the model (shape: (1, 80, 4))
-            X_input = X_input.reshape(1, 80, 4)
+            # Repeat the combined input across 80 timesteps (to match the expected shape of (80, 1))
+            X_input = np.array([[combined_input]] * 80)
+
+            # Reshape for the model (shape: (1, 80, 1))
+            X_input = X_input.reshape(1, 80, 1)
 
             # Button to predict
             if st.button('Predict'):
