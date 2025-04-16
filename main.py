@@ -63,7 +63,7 @@ if uploaded_file is not None:
             X_padded = pad_sequences(raw_signals_normalized, maxlen=80, padding='post', truncating='post')
             X = X_padded.reshape(len(df), 80, 1)
 
-            # Simplified inputs for the user
+            # Simplified inputs for the user (symptoms data)
             parkinson_input = st.selectbox("Have you been diagnosed with Parkinson's disease?", ["Yes", "No"])
             tremor_input = st.selectbox("Do you experience tremors?", ["Yes", "No"])
             sleep_input = st.selectbox("Do you have sleep problems?", ["Yes", "No"])
@@ -75,8 +75,11 @@ if uploaded_file is not None:
             sleep_val = 1 if sleep_input == "Yes" else 0
             motor_val = 1 if motor_input == "Yes" else 0
 
-            # Create an input array for the model (you can adjust this structure as needed)
-            X_input = np.array([[parkinson_val, tremor_val, sleep_val, motor_val]])
+            # Repeat the input data across 80 timesteps (to match the expected shape of (80, 1))
+            X_input = np.array([[parkinson_val, tremor_val, sleep_val, motor_val]] * 80)
+
+            # Reshape for the model (shape: (1, 80, 4))
+            X_input = X_input.reshape(1, 80, 4)
 
             # Button to predict
             if st.button('Predict'):
@@ -100,4 +103,3 @@ if uploaded_file is not None:
         st.error("The file you uploaded is not a valid ZIP file or it's corrupted. Please check the file and try again.")
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
-
