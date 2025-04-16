@@ -84,7 +84,7 @@ if uploaded_file is not None:
 
             # Reshape for the model (shape: (1, 80, 1))
             X_input = X_input.reshape(1, 80, 1)
-             st.write("### Upload EEG signal image")
+            st.write("### Upload EEG signal image")
             uploaded_image = st.file_uploader("Upload EEG Signal Image", type=["png", "jpg", "jpeg"])
 
             if uploaded_image is not None:
