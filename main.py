@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # Load the trained model
-model = load_model('/mnt/data/parkinson_multi_task_model.h5')
+model = load_model('parkinson_multi_task_model.h5')
 
 # Function to convert string signal data into arrays
 def convert_to_array(signal_str):
