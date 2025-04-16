@@ -7,6 +7,7 @@ import ast
 from tensorflow.keras.models import load_model
 from sklearn.preprocessing import StandardScaler
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+from PIL import Image
 
 # Load the trained model
 model = load_model('parkinson_multi_task_model.h5')
