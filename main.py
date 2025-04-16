@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # Load the trained model
-model = load_model('parkinson_multi_task_model.h5')
+model = load_model('/mnt/data/parkinson_multi_task_model.h5')
 
 # Function to convert string signal data into arrays
 def convert_to_array(signal_str):
@@ -75,12 +75,12 @@ if uploaded_file is not None:
             sleep_val = 1 if sleep_input == "Yes" else 0
             motor_val = 1 if motor_input == "Yes" else 0
 
-            # Repeat the input data across 80 timesteps (to match the expected shape of (80, 4))
-            # We need the input shape (1, 80, 4) to match the Conv1D layer
+            # Repeat the input data across 80 timesteps (to match the expected shape of (80, 1))
             X_input = np.array([[parkinson_val, tremor_val, sleep_val, motor_val]] * 80)
 
-            # Reshape for the model (shape: (1, 80, 4))
-            X_input = X_input.reshape(1, 80, 4)
+            # Reshape for the model (shape: (1, 80, 1)) to match model input
+            # Now we reshape it to (1, 80, 1), as the model expects 1 feature per timestep
+            X_input = X_input[:, :, 0].reshape(1, 80, 1)
 
             # Button to predict
             if st.button('Predict'):
