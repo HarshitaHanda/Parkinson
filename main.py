@@ -75,11 +75,12 @@ if uploaded_file is not None:
             sleep_val = 1 if sleep_input == "Yes" else 0
             motor_val = 1 if motor_input == "Yes" else 0
 
-            # Repeat the input data across 80 timesteps (to match the expected shape of (80, 1))
+            # Repeat the input data across 80 timesteps (to match the expected shape of (80, 4))
+            # We need the input shape (1, 80, 4) to match the Conv1D layer
             X_input = np.array([[parkinson_val, tremor_val, sleep_val, motor_val]] * 80)
 
-            # Reshape for the model (shape: (1, 80, 1))
-            X_input = X_input.reshape(1, 80, 1)
+            # Reshape for the model (shape: (1, 80, 4))
+            X_input = X_input.reshape(1, 80, 4)
 
             # Button to predict
             if st.button('Predict'):
